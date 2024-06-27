@@ -11,25 +11,35 @@
 // const x = function() {
 //     console.log(document.querySelector('.section__left_guess').value);
 // };
-
+// Случайное секретное число
 const secretNumber = Math.trunc(Math.random() * 20) + 1;
+// Количество попыток
 let score = 20;
-
+// Присвоение секретного числа вместо ?
 document.querySelector(".header__number").textContent = secretNumber;
 
+// Функция для обработки события клик
 document.querySelector(".check").addEventListener("click", function () {
   const guess = Number(document.querySelector(".section__left_guess").value);
 
   console.log(guess, typeof guess);
 
+  // Когда на входе не получаем данные
   if (!guess) {
     document.querySelector(".section__right_message").textContent =
       "Нет числа!";
-  } else if (guess === secretNumber) {
+  }
+
+  // Когда угадали число
+  else if (guess === secretNumber) {
     document.querySelector(".section__right_message").textContent =
       "Вы угадали!";
-    // document.querySelector(".highscore").textContent += Number(secretNumber);
-  } else if (guess > secretNumber) {
+    document.querySelector('body').style.backgroundColor = '#60b347';
+    document.querySelector('.header__number').style.width = '25rem';
+  }
+
+  // Когда загаданное число меньше
+  else if (guess > secretNumber) {
     if (score > 1) {
       document.querySelector(".section__right_message").textContent =
         "Загаданное число меньше вашего!";
@@ -40,7 +50,10 @@ document.querySelector(".check").addEventListener("click", function () {
         "Попытки закончились! Вы проиграли!";
       document.querySelector(".score").textContent = 0;
     }
-  } else if (guess < secretNumber) {
+  }
+
+  // Когда загаданное число больше
+  else if (guess < secretNumber) {
     if (score > 1) {
       document.querySelector(".section__right_message").textContent =
         "Загаданное число больше вашего!";
