@@ -1,22 +1,11 @@
 "use strict";
 
-// console.log(document.querySelector('.section__right_message').textContent);
-// document.querySelector('.section__right_message').textContent = 'Правильное число!';
-
-// document.querySelector('.header__number').textContent = 11;
-// document.querySelector('.score').textContent = 10;
-
-// document.querySelector('.section__left_guess').value = 5;
-
-// const x = function() {
-//     console.log(document.querySelector('.section__left_guess').value);
-// };
 // Случайное секретное число
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 // Количество попыток
 let score = 20;
-// Присвоение секретного числа вместо ?
-document.querySelector(".header__number").textContent = secretNumber;
+
+let highscore = 0;
 
 // Функция для обработки события клик
 document.querySelector(".check").addEventListener("click", function () {
@@ -34,8 +23,14 @@ document.querySelector(".check").addEventListener("click", function () {
   else if (guess === secretNumber) {
     document.querySelector(".section__right_message").textContent =
       "Вы угадали!";
-    document.querySelector('body').style.backgroundColor = '#60b347';
-    document.querySelector('.header__number').style.width = '25rem';
+    document.querySelector(".header__number").textContent = secretNumber;
+    document.querySelector("body").style.backgroundColor = "#60b347";
+    document.querySelector(".header__number").style.width = "25rem";
+
+    if (score > highscore) {
+      highscore = score;
+      document.querySelector(".highscore").textContent = highscore;
+    }
   }
 
   // Когда загаданное число меньше
@@ -65,4 +60,19 @@ document.querySelector(".check").addEventListener("click", function () {
       document.querySelector(".score").textContent = 0;
     }
   }
+});
+
+// Перезагрузка игры
+
+document.querySelector(".again").addEventListener("click", function () {
+  score = 20;
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+
+  document.querySelector(".section__right_message").textContent =
+    "Начинайте угадывать...";
+  document.querySelector(".score").textContent = score;
+  document.querySelector("body").style.backgroundColor = "#3f1616";
+  document.querySelector(".header__number").style.width = "15rem";
+  document.querySelector(".header__number").textContent = "?";
+  document.querySelector(".section__left_guess").value = "";
 });
